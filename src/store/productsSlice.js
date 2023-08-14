@@ -21,16 +21,33 @@ const productsSlice = createSlice({
   },
   reducers: {
     addToCart: (state, action) => {
-      const newItem = action.payload;
-      const existingItem = state.cart.find(item => item.id === newItem.id);
-      
+      const newItem = action.payload
+      const existingItem = state.cart.find(item => item.id === newItem.id)
+
       if (!existingItem) {
-        state.cart.push({...newItem, count: 1});
+        state.cart.push({
+          ...newItem,
+          total: newItem.price, // Устанавливаем начальное значение total
+          count: 1
+        })
+      } else {
+        existingItem.total += newItem.price // Увеличиваем total на цену товара
+        existingItem.count++ // Увеличиваем количество товара
       }
     },
     increment: (state, action) => {
       state.cart[action.payload].count++
-      console.log(state.cart);
+      state.cart[action.payload].total =
+        state.cart[action.payload].count * state.cart[action.payload].price
+    },
+    decrement: (state, action) => {
+      state.cart[action.payload].count--
+      state.cart[action.payload].total = state.cart[action.payload].total - state.cart[action.payload].price
+      if (state.cart[action.payload].count === 0) {
+        state.cart = state.cart.filter(
+          (item, index) => index !== action.payload
+        )
+      }
     }
   },
   extraReducers: builder => {
@@ -50,5 +67,5 @@ const productsSlice = createSlice({
   }
 })
 
-export const { addToCart, increment } = productsSlice.actions
+export const { addToCart, increment, decrement } = productsSlice.actions
 export default productsSlice.reducer

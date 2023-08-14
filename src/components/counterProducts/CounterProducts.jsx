@@ -7,7 +7,7 @@ const CounterProducts = () => {
   const cart = useSelector(state => state.products)
 
   return (
-    <NavLink to={'/cart'}>
+    <NavLink to={'products/cart'}>
       <div className="absolute top-10 right-10 ">
         <div className="relative">
           <AiOutlineShoppingCart size={'40px'} />

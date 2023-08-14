@@ -6,6 +6,7 @@ import { fetchProductsData, addToCart } from './store/productsSlice'
 import ProductCard from './components/ProductCard/ProductCard'
 import { Pagination } from 'antd'
 import CounterProducts from './components/counterProducts/CounterProducts'
+import BreadCrumbs from './components/breadCrumbs/BreadCrumbs'
 
 function App() {
   const [currentPage, setCurreentPage] = useState(1)
@@ -38,7 +39,8 @@ function App() {
     <div className="min-h-screen">
       <Title>Products</Title>
       <div className="container m-auto">
-        <div className="flex flex-wrap gap-6 justify-around py-6">
+        <BreadCrumbs />
+        <div className="flex flex-wrap gap-6 justify-between py-6">
           {data.products &&
             data.products.map(product => (
               <ProductCard
